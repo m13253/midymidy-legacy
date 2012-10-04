@@ -28,7 +28,7 @@ function getmap(name) {
 
 function parseBuffer(buf, offset, data) {
     if(!data)
-        data = {starttime: new Date(), maxheight: 0};
+        data = {starttime: new Date(), maxtime: 0, maxheight: 0};
     if(data.mthd==undefined) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x68, 0x64], offset);
         if(offset==-1) {
@@ -47,7 +47,6 @@ function parseBuffer(buf, offset, data) {
         data.notes_vel=new Array(256);
     }
 
-    data.maxtime=0;
     while(offset!=-1) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x72, 0x6b], offset);
         if(offset==-1)
@@ -129,9 +128,13 @@ function parseBuffer(buf, offset, data) {
     document.body.appendChild(el);
 }
 
+mintime=null;
+
 function noteon(data, time, channel, note, vel) {
     if(vel==0)
         return noteoff(data, time, channel, note, vel);
+    if(mintime==null || mintime>time)
+        mintime=time;
     var cn=(channel<<7)|note;
     if(data.notes.indexOf(cn)!=-1)
         noteoff(data, time, channel, note, 0);
