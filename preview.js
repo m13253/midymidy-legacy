@@ -27,6 +27,7 @@ function getmap(name) {
 }
 
 function parseBuffer(buf, offset, data) {
+    var starttime=new Date();
     if(!data)
         data = {};
     if(data.mthd==undefined) {
@@ -122,6 +123,9 @@ function parseBuffer(buf, offset, data) {
     el.style.height="100%";
     el.style.zIndex="-1";
     el.style.backgroundColor="lightgray";
+    el.style.fontSize="12px"
+    el.style.textAlign="right";
+    el.innerHTML="MIDI file rendered in"+(new Date()-starttime)+"ms."
     document.body.appendChild(el);
 }
 
