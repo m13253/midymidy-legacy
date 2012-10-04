@@ -2,7 +2,7 @@
 <html>
 <body>
 <div style="width: 1024px; margin-left: auto; margin-right: auto; text-align: center">
-<audio controls="controls" style="width: 1024px" id="audio" ontimeupdate="window.frames['score'].scrollTo(0, (this.currentTime+window.frames['score'].mintime)*32);">
+<audio controls="controls" style="width: 1024px" id="audio" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
   <source src="demo.ogg" type="audio/ogg" />
 </audio>
 <iframe width="1024" height="640" seamless="seamless" scrolling="no" src="preview.html#demo.mid" id="score"></iframe>
