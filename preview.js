@@ -125,7 +125,7 @@ function parseBuffer(buf, offset, data) {
     el.style.backgroundColor="lightgray";
     el.style.fontSize="12px"
     el.style.textAlign="right";
-    el.innerHTML="MIDI file rendered in"+(new Date()-starttime)+"ms."
+    el.innerHTML="MIDI file rendered in "+(new Date()-starttime)+"ms."
     document.body.appendChild(el);
 }
 
