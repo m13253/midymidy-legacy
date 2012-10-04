@@ -27,9 +27,8 @@ function getmap(name) {
 }
 
 function parseBuffer(buf, offset, data) {
-    var starttime=new Date();
     if(!data)
-        data = {};
+        data = {starttime: new Date(), maxheight: 0};
     if(data.mthd==undefined) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x68, 0x64], offset);
         if(offset==-1) {
@@ -42,13 +41,13 @@ function parseBuffer(buf, offset, data) {
         data.mthd.trackCount=scanInt(buf, offset+6, 2);
         data.mthd.division=scanInt(buf, offset+8, 2);
         offset+=data.mthd.len+4;
-        data.tempoCycle={0: 500000};
+        data.tempo={0: data.mthd.division*2};
         data.notes=new Array(256);
         data.notes_time=new Array(256);
         data.notes_vel=new Array(256);
     }
 
-    var maxtime=0;
+    data.maxtime=0;
     while(offset!=-1) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x72, 0x6b], offset);
         if(offset==-1)
@@ -74,8 +73,8 @@ function parseBuffer(buf, offset, data) {
                 offset+=2;
                 switch(cmd) {
                 case 0x51:
-                    data.tempoCycle[time]=scanInt(buf, offset, metalen);
-                    console.log(time+": Cycle="+data.tempoCycle[time]+"us/beat")
+                    data.tempo[time]=data.mthd.division*1000000/scanInt(buf, offset, metalen);
+                    console.log(time+": Tempo="+data.tempo[time]+"delta/s")
                     break;
                 }
                 offset+=metalen;
@@ -87,13 +86,13 @@ function parseBuffer(buf, offset, data) {
                     var note=scanInt(buf, offset, 1)
                     var vel=scanInt(buf, offset+1, 1);
                     offset+=2;
-                    noteon(data, time, channel, note, vel);
+                    noteon(data, delta2sec(data, time), channel, note, vel);
                     break;
                 case 0x8:
                     var note=scanInt(buf, offset, 1)
                     var vel=scanInt(buf, offset+1, 1);
                     offset+=2;
-                    noteoff(data, time, channel, note, vel);
+                    noteoff(data, delta2sec(data, time), channel, note, vel);
                     break;
                 case 0xa:
                 case 0xb:
@@ -108,24 +107,25 @@ function parseBuffer(buf, offset, data) {
             }
         }
         offset=track_end;
-        if(maxtime<time)
-            maxtime=time;
+        if(data.maxtime<time)
+            data.maxtime=time;
+        setTimeout(function() {parseBuffer(buf, offset, data);}, 1); return;
     }
     for(var i in data.notes)
-        noteoff(data, maxtime, i>>7, i&0x7f, 0);
+        noteoff(data, data.maxtime, i>>7, i&0x7f, 0);
     var el=document.getElementById("midiloading");
     el.innerHTML="";
     el.style.backgroundColor="lightgray";
     var el=document.createElement("div");
     el.style.position="absolute";
-    el.style.top=(maxheight+100)+"px";
+    el.style.top=(data.maxheight+100)+"px";
     el.style.width="1024px";
     el.style.height="100%";
     el.style.zIndex="-1";
     el.style.backgroundColor="lightgray";
     el.style.fontSize="12px"
     el.style.textAlign="right";
-    el.innerHTML="MIDI file rendered in "+(new Date()-starttime)+"ms."
+    el.innerHTML="MIDI file rendered in "+(new Date()-data.starttime)+"ms."
     document.body.appendChild(el);
 }
 
@@ -139,14 +139,13 @@ function noteon(data, time, channel, note, vel) {
     data.notes_time[idx]=time;
 }
 
-maxheight = 0;
 function noteoff(data, time, channel, note, vel) {
     var idx=data.notes.indexOf((channel<<7)|note);
     if(idx==-1)
         return;
     var el=document.createElement("div");
     el.style.position="absolute";
-    var _eltop=data.notes_time[idx];
+    var _eltop=data.notes_time[idx]*32;
     el.style.top=_eltop+"px";
     el.style.left=(note*8)+"px";
     if(channel==9)
@@ -154,17 +153,30 @@ function noteoff(data, time, channel, note, vel) {
     else
         el.style.zIndex="2";
     el.style.width="8px";
-    var _elheight=time-data.notes_time[idx];
+    var _elheight=(time-data.notes_time[idx])*32;
     el.style.height=_elheight+"px";
     el.style.backgroundColor=channel_color[channel];
     eldiv=document.getElementById("midiview")
     eldiv.appendChild(el);
-    if(maxheight<_eltop+_elheight) {
-        maxheight=_eltop+_elheight;
-        eldiv.style.height=maxheight+"px";
+    if(data.maxheight<_eltop+_elheight) {
+        data.maxheight=_eltop+_elheight;
+        eldiv.style.height=data.maxheight+"px";
     }
     delete(data.notes[idx]);
     delete(data.notes_time[idx]);
+}
+
+function delta2sec(data, delta) {
+    var lastidx=0;
+    var total=0;
+    for(var i in data) {
+        if(i==delta)
+            return total;
+        else
+            return total+(delta-lastidx)/data.tempo[lastidx];
+        total+=(i-lastidx)/data.tempo[lastidx];
+        lastidx=i;
+    }
 }
 
 function cmpArray(a, b) {
