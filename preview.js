@@ -146,7 +146,7 @@ function noteon(data, time, channel, note, vel) {
 
 function noteoff(data, time, channel, note, vel) {
     var idx=data.notes.indexOf((channel<<7)|note);
-    if(idx==-1)
+    if(idx==-1 || time<=data.notes_time[idx])
         return;
     var el=document.createElement("div");
     el.style.position="absolute";
