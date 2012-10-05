@@ -139,7 +139,7 @@ function parseBuffer(buf, offset, data) {
         el.style.backgroundColor="rgba(0, 0, 0, 0.5)";
         eldiv.appendChild(el);
     }
-    console.log("Length: "+delta2sec(data.maxtime)+"s");
+    console.log("Length: "+delta2sec(data, data.maxtime)+"s");
 }
 
 mintime=null;
@@ -266,6 +266,18 @@ function reportError(e) {
     statusdiv.style.color="red";
     statusdiv.innerHTML=e;
     throw e;
+}
+
+function assert(x /* as function */ ) {
+    try {
+        if(!x())
+            try {
+                return reportError("Assert failed: "+x);
+            } catch(e) {
+            }
+    } catch(e) {
+        return reportError("Assert: "+x+": "+e);
+    }
 }
 
 // For some buggy browsers that have no Array.indexOf
