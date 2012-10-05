@@ -32,7 +32,7 @@ function getmap(name) {
 
 function parseBuffer(buf, offset, data) {
     if(!data)
-        data = {starttime: new Date(), maxtime: 0, maxheight: 0};
+        data = {maxtime: 0, maxheight: 0};
     if(data.mthd==undefined) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x68, 0x64], offset);
         if(offset==-1) {
@@ -128,18 +128,6 @@ function parseBuffer(buf, offset, data) {
     el.style.zIndex="-1";
     el.style.backgroundColor="lightgray";
     document.body.appendChild(el);
-    var eldiv=document.getElementById("midiview");
-    for(var i=0; i<data.maxtime; i+=data.mthd.division) {
-        var el=document.createElement("div");
-        el.style.position="absolute";
-        el.style.top=(delta2sec(data, i)*32)+"px";
-        el.style.width="1024px";
-        el.style.height="1px";
-        el.style.zIndex="0";
-        el.style.backgroundColor="rgba(0, 0, 0, 0.5)";
-        eldiv.appendChild(el);
-    }
-    console.log("Length: "+delta2sec(data, data.maxtime)+"s");
 }
 
 mintime=null;
@@ -306,13 +294,5 @@ if(!Array.prototype.indexOf)
             if(k in t && t[k]===searchElement)
                 return k;
         return -1;
-    };
-
-// Array Remove - By John Resig (MIT Licensed)
-if(!Array.prototype.remove)
-    Array.prototype.remove = function(from, to) {
-        var rest = this.slice((to || from)+1 || this.length);
-        this.length = from<0 ? this.length+from : from;
-        return this.push.apply(this, rest);
     };
 
