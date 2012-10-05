@@ -114,8 +114,9 @@ function parseBuffer(buf, offset, data) {
             data.maxtime=time;
         setTimeout(function() {parseBuffer(buf, offset, data);}, 1); return;
     }
+    var tmpmaxtime=delta2sec(data, data.maxtime)+3;
     for(var i in data.notes)
-        noteoff(data, data.maxtime, i>>7, i&0x7f, 0);
+        noteoff(data, tmpmaxtime, i>>7, i&0x7f, 0);
     var el=document.getElementById("midiloading");
     el.innerHTML="";
     el.style.backgroundColor="lightgray";
