@@ -128,7 +128,7 @@ function parseBuffer(buf, offset, data) {
     el.style.zIndex="-1";
     el.style.backgroundColor="lightgray";
     document.body.appendChild(el);
-    var viewel=document.getElementById("midiview");
+    var eldiv=document.getElementById("midiview");
     for(var i=0; i<data.maxtime; i+=data.mthd.division) {
         var el=document.createElement("div");
         el.style.position="absolute";
@@ -137,8 +137,9 @@ function parseBuffer(buf, offset, data) {
         el.style.height="1px";
         el.style.zIndex="0";
         el.style.backgroundColor="rgba(0, 0, 0, 0.5)";
-        viewel.appendChild(el);
+        eldiv.appendChild(el);
     }
+    console.log("Length: "+delta2sec(data.maxtime)+"s");
 }
 
 mintime=null;
@@ -172,7 +173,7 @@ function noteoff(data, time, channel, note, vel) {
     var _elheight=(time-data.notes_time[idx])*32;
     el.style.height=_elheight+"px";
     el.style.backgroundColor=channel_color[channel];
-    eldiv=document.getElementById("midiview")
+    var eldiv=document.getElementById("midiview")
     eldiv.appendChild(el);
     if(data.maxheight<_eltop+_elheight) {
         data.maxheight=_eltop+_elheight;
@@ -185,14 +186,15 @@ function noteoff(data, time, channel, note, vel) {
 function delta2sec(data, delta) {
     var lastidx=0;
     var total=0;
-    for(var i in data) {
+    for(var i in data.tempo) {
         if(i==delta)
             return total;
-        else
-            return total+(delta-lastidx)/data.tempo[lastidx];
+        else if(i>delta)
+            break;
         total+=(i-lastidx)/data.tempo[lastidx];
         lastidx=i;
     }
+    return total+(delta-lastidx)/data.tempo[lastidx];
 }
 
 function cmpArray(a, b) {
