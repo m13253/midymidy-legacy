@@ -128,6 +128,17 @@ function parseBuffer(buf, offset, data) {
     el.style.zIndex="-1";
     el.style.backgroundColor="lightgray";
     document.body.appendChild(el);
+    var viewel=document.getElementById("midiview");
+    for(var i=0; i<data.maxtime; i+=data.mthd.division) {
+        var el=document.createElement("div");
+        el.style.position="absolute";
+        el.style.top=(delta2sec(data, i)*32)+"px";
+        el.style.width="1024px";
+        el.style.height="1px";
+        el.style.zIndex="0";
+        el.style.backgroundColor="rgba(0, 0, 0, 0.5)";
+        viewel.appendChild(el);
+    }
 }
 
 mintime=null;
