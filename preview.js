@@ -36,7 +36,7 @@ function parseBuffer(buf, offset, data) {
     if(data.mthd==undefined) {
         offset=scanUntil(buf, [0x4d, 0x54, 0x68, 0x64], offset);
         if(offset==-1) {
-            reportError("Not a valid MIDI file.");
+            reportError("Error: MIDI file invalid.");
             return;
         }
         data.mthd={};
@@ -249,8 +249,10 @@ function scanBigint(arr, from) {
 }
 
 function reportError(e) {
-    document.getElementById("status").innerHTML="Error: "+e;
-    console.error(e)
+    var statusdiv=document.getElementById("status");
+    statusdiv.style.color="red";
+    statusdiv.innerHTML=e;
+    throw e;
 }
 
 // For some buggy browsers that have no Array.indexOf
