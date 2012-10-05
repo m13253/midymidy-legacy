@@ -77,7 +77,6 @@ function parseBuffer(buf, offset, data) {
                 switch(cmd) {
                 case 0x51:
                     data.tempo[time]=data.mthd.division*1000000/scanInt(buf, offset, metalen);
-                    console.log(time+": Tempo="+data.tempo[time]+"delta/s")
                     break;
                 }
                 offset+=metalen;
@@ -116,7 +115,8 @@ function parseBuffer(buf, offset, data) {
     }
     var tmpmaxtime=delta2sec(data, data.maxtime)+3;
     for(var i in data.notes)
-        noteoff(data, tmpmaxtime, i>>7, i&0x7f, 0);
+        if(i!=undefined)
+            noteoff(data, tmpmaxtime, i>>7, i&0x7f, 0);
     var el=document.getElementById("midiloading");
     el.innerHTML="";
     el.style.backgroundColor="lightgray";
