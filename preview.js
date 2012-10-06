@@ -11,18 +11,29 @@ channel_color = [
     "rgba(153,   0,   0, 0.8)", "rgba(  0,  51,   0, 0.8)"
 ];
 
+function initpreview() {
+    var shebang=getshebang();
+    if(shebang)
+        setTimeout(function() { getmap(shebang); }, 1);
+    else
+        reportError("No file loaded.");
+}
+
 function getmap(name) {
     try {
         var req = new XMLHttpRequest();
         req.open('GET', name, true);
         req.responseType = "arraybuffer";
         req.onload = function(e) {
+            if(req.status!=200 && req.status!=206)
+                reportError("HTTP Error: "+req.status+" "+req.statusText);
             var respBuffer = req.response;
             if(respBuffer) {
                 var respBytes = new Uint8Array(respBuffer);
                 window.r=respBytes;
                 parseBuffer(respBytes, 0);
-            }
+            } else
+                reportError("Server returned an empty response.");
         }
         req.send();
     } catch(e) {

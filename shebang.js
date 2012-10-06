@@ -6,6 +6,6 @@ function getshebang() {
     var idx = she.indexOf('!');
     if(idx==-1)
         return undefined;
-    return idx.substr(idx+1);
+    return she.substr(idx+1);
 }
 

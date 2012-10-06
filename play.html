@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+<script language="javascript" type="text/javascript" src="shebang.js"></script>
+</head>
 <body>
 <div style="width: 1024px; margin-left: auto; margin-right: auto; text-align: center">
 <audio controls="controls" style="width: 1024px" id="audio" preload="metadata" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
@@ -8,8 +11,8 @@
 <iframe width="1024" height="640" seamless="seamless" scrolling="no" frameborder="0" style="border: none; overflow: hidden" src="about:blank" id="score"></iframe>
 </div>
 <script language="javascript" type="text/javascript">
-midname=location.hash.substr(1) || "demo";
-document.getElementById("score").src="preview.html#"+midname+".mid";
+midname=getshebang() || "demo";
+document.getElementById("score").src="preview.html#!"+midname+".mid";
 var audio=document.getElementById("audio");
 audio.addEventListener("error", function() {
     console.log("File type not supported.");

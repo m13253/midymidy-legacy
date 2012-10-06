@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script language="javascript" type="text/javascript" src="shebang.js"></script>
 <script language="javascript" type="text/javascript" src="preview.js"></script>
 <style>
 html, body {
@@ -9,7 +10,7 @@ html, body {
 }
 </style>
 </head>
-<body style="margin: 0px; height: 100%" onload="if(location.hash && location.hash.length>1) setTimeout(function() {getmap(location.hash.substr(1));}, 1);">
+<body style="margin: 0px; height: 100%" onload="initpreview();">
 <div id="midiloading" style="width: 1024px; height: 100px; z-index: -1; text-align: center; background-color: white"><div id="status" style="position: absolute; top: 68px; width: 1024px; text-align: center; font-size: 32px"><img src="loading.gif" width="32" height="32" /></div></div>
 <div id="midiview" style="position: absolute; top: 100px; left: 0px; width: 1024px; height: 100%; background-image: url(kbgrid.svg); background-repeat: repeat"></div><div style="position: fixed; top: 100px; left: 0px; z-index: 3; width: 1024px; height: 1px; background-color: red"></div>
 <script language="javascript" type="text/javascript">
