@@ -146,7 +146,7 @@ function noteon(data, time, channel, note, vel) {
 
 function noteoff(data, time, channel, note, vel) {
     var idx=data.notes.indexOf((channel<<7)|note);
-    if(idx==-1 || time<=data.notes_time[idx])
+    if(idx==-1 || !(time>data.notes_time[idx]))
         return;
     var el=document.createElement("div");
     el.style.position="absolute";
@@ -175,9 +175,7 @@ function delta2sec(data, delta) {
     var lastidx=0;
     var total=0;
     for(var i in data.tempo) {
-        if(i==delta)
-            return total;
-        else if(i>delta)
+        if(i>=delta)
             break;
         total+=(i-lastidx)/data.tempo[lastidx];
         lastidx=i;
