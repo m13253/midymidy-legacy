@@ -12,13 +12,13 @@
 </div>
 <script language="javascript" type="text/javascript">
 midname=getshebang() || "demo";
-document.getElementById("score").src="preview.html#!"+midname+".mid";
+document.getElementById("score").src="preview.html#!midi/"+midname+".mid";
 var audio=document.getElementById("audio");
 audio.addEventListener("error", function() {
     console.log("File type not supported.");
     throw "File type not supported.";
 }, true);
-audio.src=midname+".ogg";
+audio.src="midi/"+midname+".ogg";
 audio.type="audio/ogg";
 audio.load();
 </script>
