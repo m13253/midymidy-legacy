@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
-private_dir = "/home/johndoe/midymidy/private"
-database_dir = "/home/johndoe/midymidy/data"
+# Change these
+private_dir = '/home/johndoe/midymidy/private'
+database_dir = '/home/johndoe/midymidy/data'
 
+# Do not change below
 import sys
 if private_dir not in sys.path:
     sys.path.insert(1, private_dir)
+if __name__=='__main__':
+    sys.stdout.write('Status: 403 Forbidden\n\n')
