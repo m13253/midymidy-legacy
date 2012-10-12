@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-private_dir = "/home/brilliant/work/midymidy/private"
-database_dir = "/home/brilliant/work/midymidy/data"
+private_dir = "/home/johndoe/midymidy/private"
+database_dir = "/home/johndoe/midymidy/data"
 
 import sys
 if private_dir not in sys.path:
