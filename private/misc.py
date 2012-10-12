@@ -2,12 +2,12 @@
 
 import sys
 
-def printfile(ifilename, ostream=sys.stdout):
-    with open(ifilename, "r") as istream:
+def include(ifilename, ostream=sys.stdout):
+    with open(ifilename, "rb") as istream:
         while True:
             buf=istream.read(4096)
             if buf:
-                ostream.write(buf)
+                ostream.buffer.write(buf)
             else:
                 break
 
