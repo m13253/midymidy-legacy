@@ -3,7 +3,5 @@
 import config
 import misc
 
-print("Status: 200 OK")
-print("Content-Type: text/html; charset=utf-8");
-print()
+misc.writebin("Status: 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n");
 misc.include("play.html")
