@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script language="javascript" type="text/javascript" src="shebang.js"></script>
-</head>
-<body>
 <div style="width: 1024px; margin-left: auto; margin-right: auto; text-align: center">
 <audio controls="controls" style="width: 1024px" id="audio" preload="metadata" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
 <div style="font-size: 32px; color: red">Error: Your browser does not support HTML5 audio replay.</div>
@@ -22,5 +16,3 @@ audio.src="midi/"+midname+".ogg";
 audio.type="audio/ogg";
 audio.load();
 </script>
-</body>
-</html>
