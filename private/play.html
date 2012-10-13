@@ -1,9 +1,7 @@
-<div style="width: 1024px; margin-left: auto; margin-right: auto; text-align: center">
 <audio controls="controls" style="width: 1024px" id="audio" preload="preload" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
 <div style="font-size: 32px; color: red">Error: Your browser does not support HTML5 audio replay.</div>
 </audio>
 <iframe width="1024" height="640" seamless="seamless" scrolling="no" frameborder="0" style="border: none; overflow: hidden" src="about:blank" id="score"></iframe>
-</div>
 <script language="javascript" type="text/javascript">
 midname=getshebang() || "demo";
 document.getElementById("score").src="preview.html#!midi/"+midname+".mid";

@@ -1,0 +1,8 @@
+/* css */
+
+html, body {
+    margin: 0px;
+    font-family: "Lucinda Grande", "Droid Sans", "DejaVu Sans", Cantarell, Ubuntu, "Liberation Sans", FreeSans, Helvetica, Arial, STHeiti, HeiTi-SC, "Hiragino Sans GB", "Hiragino Sans GB W3", "Hiragino Sans GB W6", "Droid Sans Fallback", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Light", "WenQuanYi Zen Hei", "Microsoft Yahei", SimHei, sans-serif, "AR PL New Sung", "AR PL UMing CN", SimSun, "WenQuanYi Bitmap Song";
+    width: 100%;
+    height: 100%;
+}
