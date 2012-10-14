@@ -11,7 +11,7 @@ req=cgi.FieldStorage()
 if 'id' in req:
     db=sqlite3.connect(misc.datafile('midymidy.db'))
     dbc=db.cursor()
-    dbc.execute('SELECT * FROM music WHERE id=?;', (req['id'],))
+    dbc.execute('SELECT * FROM music WHERE id=?;', (req['id'].value,))
     musicdata=dbc.fetchone()
 else:
     musicdata=None
@@ -22,7 +22,7 @@ if musicdata:
     misc.writebin('''<script language="javascript" type="text/javascript">
 midname=getshebang() || %s;
 </script>
-''' % repr(musicdata[4]));
+''' % repr(musicdata[3]));
 else:
     misc.writebin('''<script language="javascript" type="text/javascript">
 midname=getshebang() || "demo";
