@@ -25,3 +25,9 @@ def privfile(filename=None):
     else:
         return os.path.join(config.private_dir, filename);
 
+def datafile(filename=None):
+    if filename==None:
+        return config.private_dir
+    else:
+        return os.path.join(config.database_dir, filename);
+
