@@ -55,3 +55,4 @@ def datafile(filename=None):
 
 def escape(s):
     return json.dumps(s)[1:-1]
+

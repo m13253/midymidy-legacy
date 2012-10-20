@@ -21,7 +21,8 @@ CREATE TABLE music (
     title    TEXT,
     desc     TEXT,
     filename TEXT,
-    uploader TEXT,
+    time     REAL,
+    uploader INTEGER,
     category TEXT,
     tags     TEXT
 );
