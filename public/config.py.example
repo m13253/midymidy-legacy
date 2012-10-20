@@ -3,6 +3,7 @@
 # Change these
 private_dir = '/home/johndoe/midymidy/private'
 database_dir = '/home/johndoe/midymidy/data'
+print_debug_on_error = True
 
 # Do not change below
 import sys

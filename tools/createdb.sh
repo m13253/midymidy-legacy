@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 echo 'An empty database will be created.'
 echo 'If a database exists, it will be rewritten.'
 echo
@@ -21,9 +22,9 @@ CREATE TABLE music (
     desc     TEXT,
     filename TEXT,
     uploader TEXT,
-    column   TEXT,
+    category TEXT,
     tags     TEXT
 );
 EOM
-    [ "$?" -eq "0" ] && mv ../data/midymidy.new.db ../data/midymidy.db
+    mv ../data/midymidy.new.db ../data/midymidy.db
 fi
