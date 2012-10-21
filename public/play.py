@@ -21,17 +21,17 @@ def main():
         musicdata=None
 
     if not musicdata:
-        writebin('Status: 404 Not Found\r\n\r\n')
+        prbin('Status: 404 Not Found\r\n\r\n')
         exit()
 
-    writebin('Status: 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n');
-    include(privfile('htmlhead.html'))
-    writebin('''<title>'''+escape_for_html(musicdata['title'])+''' - MidyMidy</title>
+    prbin('Status: 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n');
+    prfile(privfile('htmlhead.html'))
+    prbin('''<title>'''+escape_for_html(musicdata['title'])+''' - MidyMidy</title>
 <meta name="title" content="'''+escape_for_prop(musicdata['title'])+'''" />
 <meta name="description" content="'''+escape_for_prop(musicdata['desc'])+'''" />
 ''')
-    include(privfile('banner.html'))
-    writebin(
+    prfile(privfile('banner.html'))
+    prbin(
     '''<section itemscope itemtype="http://schema.org/MusicRecording">
 <div style="font-size: 32pt; font-weight: bold"><span itemprop="name">'''+escape_for_html(musicdata['title'])+'''</span></div>
 <hr />
@@ -53,7 +53,7 @@ audio.addEventListener("error", function() {
 <blockquote><span itemprop="description">'''+escape_for_html(musicdata['desc'])+'''</span></blockquote>
 </section>
 ''');
-    include(privfile('htmlfoot.html'))
+    prfile(privfile('htmlfoot.html'))
 
 if __name__=='__main__':
     runmain(main)
