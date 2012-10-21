@@ -54,9 +54,10 @@ def datafile(filename=None):
         return os.path.join(config.database_dir, filename);
 
 def escape_for_js(s):
-    return json.dumps(s)[1:-1]
+    return json.dumps(str(s))[1:-1]
 
-escape_for_html=cgi.escape
+def escape_for_html(s):
+    return cgi.escape(str(s))
 
 def escape_for_prop(s):
     return escape_for_html(s).replace('"', '&quot;').replace("'", '&apos;')

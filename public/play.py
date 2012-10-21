@@ -4,6 +4,7 @@ import cgi
 import os
 import sqlite3
 import json
+import time
 
 import config
 from misc import *
@@ -33,7 +34,13 @@ def main():
     prfile(privfile('banner.html'))
     prbin(
     '''<section itemscope itemtype="http://schema.org/MusicRecording">
-<div style="font-size: 32pt; font-weight: bold"><span itemprop="name">'''+escape_for_html(musicdata['title'])+'''</span></div>
+<div style="width: 100%; font-size: 32pt; font-weight: bold"><span itemprop="name">'''+escape_for_html(musicdata['title'])+'''</span></div>
+<div style="width: 100%; text-align: right">发布时间：<span><meta itemprop="datePublished" content="'''+
+    escape_for_html(time.strftime("Y-%m-%dT%H:%M:%S%z", time.gmtime(musicdata['time'])))+
+    '''" />'''+
+    escape_for_html(time.strftime("%c", time.localtime(musicdata['time'])))+
+    '''</span>，发布者&nbsp;ID：<span itemprop="author">'''+escape_for_html(musicdata['uploader'])
+    +'''</span></div>
 <hr />
 <audio itemprop="audio" controls="controls" style="width: 1024px" id="audio" preload="preload" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
 <source src="midi/'''+escape_for_prop(musicdata['filename'])+'''.ogg" type="audio/ogg; codec=vorbis" />
