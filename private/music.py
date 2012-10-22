@@ -16,3 +16,12 @@ def nextmusic(current):
             return 'md'+''.join(current)
     return mdchars[0]+''.join(current)
 
+def getmusicdata(db, musicid):
+    dbc=db.cursor()
+    dbc.execute('SELECT id, title, desc, filename, time, uploader FROM music WHERE id=?;', (musicid,))
+    musicdata=dbc.fetchone()
+    if musicdata:
+        return dict(zip(('id', 'title', 'desc', 'filename', 'time', 'uploader'), musicdata))
+    else:
+        return None
+
