@@ -39,17 +39,32 @@ def main():
 <h1><span itemprop="name">'''+escape_for_html(musicdata['title'])+'''</span></h1>
 <div style="width: 100%; text-align: right">发布时间：<span><meta itemprop="datePublished" content="'''+escape_for_html(time.strftime("%Y-%m-%dT%H:%M:%S%z", time.gmtime(musicdata['time'])))+'''" />'''+escape_for_html(time.strftime("%c", time.localtime(musicdata['time'])))+'''</span>，发布者&nbsp;ID：<span itemprop="author">'''+escape_for_html(musicdata['uploader'])+'''</span></div>
 <hr />
-<audio itemprop="audio" controls="controls" style="width: 1024px" id="audio" preload="preload" ontimeupdate="score=document.getElementById('score').contentWindow; score.scrollTo(0, (this.currentTime+score.mintime)*32);">
+<audio itemprop="audio" controls="controls" style="width: 100%" id="audio" preload="preload">
 <source src="midi/'''+escape_for_prop(musicdata['filename'])+'''.ogg" type="audio/ogg; codec=vorbis" />
-<div style="font-size: 32px; color: red">Error: Your browser does not support HTML5 audio replay.</div>
+<div style="font-size: 32px; color: red">错误：您的浏览器不支持&nbsp;HTML5&nbsp;音频回放。</div>
 </audio>
-<iframe width="1024" height="640" seamless="seamless" scrolling="no" frameborder="0" style="border: none; overflow: hidden" src="about:blank" id="score"></iframe>
+<div id="preview" style="width: 100%; background-color: lightgray; color: red; text-align: center; font-size: 16pt"><noscript>错误：您需要&nbsp;Javascript&nbsp;来启用实时可视效果。</noscript></div>
 <script language="javascript" type="text/javascript">
-document.getElementById("score").src="preview.html#!midi/'''+escape_for_js(musicdata['filename'])+'''.mid";
-var audio=document.getElementById("audio");
+previewdiv=document.getElementById("preview");
+previewdiv.innerHTML="<img src=\\"loading.gif\\" valign=\\"middle\\" />正在加载实时可视效果……"
+previewdiv.style.backgroundColor="";
+previewdiv.style.color="";
+audio=document.getElementById("audio");
 audio.addEventListener("error", function() {
-    console.log("File type not supported.");
-    throw "File type not supported.";
+    previewdiv.innerHTML="错误：无法启动音频回放。"
+    previewdiv.style.backgroundColor="lightgray";
+    previewdiv.style.color="red";
+}, true);
+score=null;
+audio.addEventListener("canplay", function() {
+    previewdiv.style.backgroundColor="";
+    previewdiv.style.color="";
+    previewdiv.innerHTML="<iframe width=\\"1024\\" height=\\"640\\" seamless=\\"seamless\\" scrolling=\\"no\\" frameborder=\\"0\\" style=\\"border: none; overflow: hidden\\" src=\\"preview.html#!midi/'''+escape_for_js(musicdata['filename'])+'''.mid\\" id=\\"score\\"></iframe>"
+    score=document.getElementById("score").contentWindow;
+}, true);
+audio.addEventListener("timeupdate", function() {
+    if(score)
+        score.scrollTo(0, (audio.currentTime+score.mintime)*32);
 }, true);
 </script>
 <hr />
