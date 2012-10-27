@@ -17,12 +17,12 @@ def runmain(func):
         if config.print_debug_on_error:
             e=sys.exc_info()
             try:
-                prbin('<big><pre>'+cgi.escape(''.join(traceback.format_exception(e[0], e[1], e[2])))+'</pre></big>')
+                prbin('<big><pre>\n'+cgi.escape(''.join(traceback.format_exception(e[0], e[1], e[2])))+'\n</pre></big>')
             except:
                 pass
         else:
             try:
-                prbin('<h1>An error occured during handling of your request. We are sorry for the inconvenience.</h1>')
+                prbin('<h1>\nAn error occured during handling of your request. We apologize for the inconvenience.\n</h1>')
             except:
                 pass
 
@@ -61,4 +61,14 @@ def escape_for_html(s):
 
 def escape_for_prop(s):
     return escape_for_html(s).replace('"', '&quot;').replace("'", '&apos;')
+
+def error_page(status, msg):
+    if status!=None:
+        prbin('Status: %s\r\nContent-Type: text/html; charset=utf-8\r\n\r\n')
+    if msg!=None:
+        prfile(privfile('htmlhead.html'))
+        prbin('''<title>Error - MidyMidy</title>''')
+        prfile(privfile('banner.html'))
+        prbin('''<h2>%s</h2>''' % msg)
+        prfile(privfile('htmlfoot.html'))
 

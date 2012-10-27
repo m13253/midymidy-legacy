@@ -5,6 +5,7 @@ import os
 import sqlite3
 import json
 import time
+import uuid
 
 import config
 from misc import *
@@ -33,7 +34,7 @@ def main():
 <tr><td>文件：</td><td><input id="upload_file" name="upload_file" type="file" /></td></tr>
 <tr><td>标题：</td><td><input id="upload_title" name="upload_title" /></td></tr>
 <tr><td>简介：</td><td><textarea id="upload_desc" name="upload_desc"></textarea></td></tr>
-<tr><td></td><td><input type="submit" /></td></tr>
+<tr><td></td><td><input type="submit" value="上传" /></td></tr>
 </tbody></table>
 </form>
 ''')
@@ -41,29 +42,40 @@ def main():
     prfile(privfile('htmlfoot.html'))
 
 def process_upload(req):
-    prbin('Status: 200 OK\r\nContent-Type: text/plain; charse=utf-8\r\n\r\n')
-    prbin('Uploaded file detected!\n')
     if 'upload_file' in req:
-        filename=req['upload_file'].filename
-        prbin('Filename:\t%s\n' % filename)
-        if filename.endswith('.mid'):
-            filename=filename[:-4]
+        uploadfile=req['upload_file'].file
+        if not uploadfile:
+            error_page('403 Forbidden', '您的文件不符合要求。')
+            exit()
     else:
-        filename=None
+        error_page('403 Forbidden', '您的文件不符合要求。')
+        exit()
+
+    filename=str(uuid.uuid4())
+    buf=uploadfile.read(4194305)
+    if len(buf)>4194304:
+        error_page('403 Forbidden', '您的文件大小超过了&nbsp;4MB。')
+        exit()
+    with open("midi/pending/%s.mid" % filename, "wb") as f:
+        f.write(buf[:4194304])
+    del buf
+    try:
+        os.chmod("midi/pending/%s.mid" % filename, 0o666)
+    except:
+        pass
+
     if 'upload_title' in req:
         title=req['upload_title'].value
-        prbin('Title:\t%s\n' % title)
     else:
-        title=None
+        title=''
     if 'upload_desc' in req:
         desc=req['upload_desc'].value
-        prbin('Description:\n%s\n' % desc)
     else:
-        desc=None
-    prbin('Updating database...\n')
+        desc=''
+
     db=sqlite3.connect(datafile('midymidy.db'))
     mdid=music.addmusic(db, title, desc, filename, 0)
-    prbin('Updated, ID=%s\n' % mdid)
+    prbin('Status: 302 Found\r\nLocation: pending.py\r\n\r\n')
 
 if __name__=='__main__':
     runmain(main)
