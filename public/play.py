@@ -18,6 +18,9 @@ def main():
         if not musicdata:
             prbin('Status: 404 Not Found\r\n\r\n')
             exit()
+    else:
+        prbin('Status: 301 Moved Permanently\r\nLocation: ?id=md2\r\n\r\n')
+        exit()
 
     prbin('Status: 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n');
 

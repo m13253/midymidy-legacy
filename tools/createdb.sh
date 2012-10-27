@@ -12,12 +12,13 @@ then
     sqlite3 ../data/midymidy.new.db <<EOM
 CREATE TABLE users (
     no   INTEGER PRIMARY KEY,
-    id   TEXT,
+    id   TEXT UNIQUE,
     nick TEXT
 );
 INSERT INTO users (no, id, nick) VALUES (0, 'root', 'root');
 CREATE TABLE music (
-    id       TEXT PRIMARY KEY,
+    no       INTEGER PRIMARY KEY,
+    id       TEXT UNIQUE,
     title    TEXT,
     desc     TEXT,
     filename TEXT,
@@ -28,4 +29,5 @@ CREATE TABLE music (
 );
 EOM
     mv ../data/midymidy.new.db ../data/midymidy.db
+    chmod 777 ../data/midymidy.db
 fi
