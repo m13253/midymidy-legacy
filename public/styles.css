@@ -18,3 +18,8 @@ html, body {
 *[lang=en], *[lang=en-us] {
     font-family: "Lucinda Grande", "Droid Sans", "DejaVu Sans", Cantarell, Ubuntu, "Liberation Sans", FreeSans, Helvetica, Arial, sans-serif;
 }
+
+h1 {
+    font-size: 32pt;
+    font-weight: bold;
+}
