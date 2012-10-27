@@ -29,5 +29,6 @@ CREATE TABLE music (
 );
 EOM
     mv ../data/midymidy.new.db ../data/midymidy.db
-    chmod 777 ../data/midymidy.db
+    chmod 666 ../data/midymidy.db
+    chmod 777 ../data
 fi
