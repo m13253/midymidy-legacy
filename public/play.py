@@ -49,10 +49,10 @@ def main():
 <source src="midi/'''+escape_for_prop(musicdata['filename'])+'''.ogg" type="audio/ogg; codec=vorbis" />
 <div style="font-size: 32px; color: red">错误：您的浏览器不支持&nbsp;HTML5&nbsp;音频回放。</div>
 </audio>
-<div id="preview" style="width: 100%; background-color: lightgray; color: red; text-align: center; font-size: 16pt"><noscript>错误：您需要&nbsp;Javascript&nbsp;来启用实时可视效果。</noscript></div>
+<div id="preview" style="width: 100%; background-color: lightgray; color: red; text-align: center; font-size: 16pt"><noscript>错误：您需要&nbsp;Javascript&nbsp;来启用实时预览。</noscript></div>
 <script language="javascript" type="text/javascript">
 previewdiv=document.getElementById("preview");
-previewdiv.innerHTML="<img src=\\"loading.gif\\" valign=\\"middle\\" />正在加载实时可视效果……"
+previewdiv.innerHTML="<img src=\\"loading.gif\\" valign=\\"middle\\" />正在加载实时预览……"
 previewdiv.style.backgroundColor="";
 previewdiv.style.color="";
 audio=document.getElementById("audio");
