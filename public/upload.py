@@ -74,7 +74,7 @@ def process_upload(req):
         desc=''
 
     db=sqlite3.connect(datafile('midymidy.db'))
-    mdid=music.addmusic(db, title, desc, filename, 0)
+    music.addmusic(db, title, desc, filename, 0)
     prbin('Status: 302 Found\r\nLocation: pending.py\r\n\r\n')
 
 if __name__=='__main__':

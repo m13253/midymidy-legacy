@@ -2,44 +2,41 @@
 
 import time
 
-mdchars='23456789abcdefghjkmnpqstuvwxyz2'
+mdchars='23456789abcdefghjkmnpqstuvwxyz'
 
-def nextmusic(current):
-    current=current.lower()
-    if current.startswith('md'):
-        current=current[2:]
-    current=list(current)
-    for i in current:
+def md2int(md):
+    if md.startswith('md'):
+        md=md[2:]
+    res=0
+    for i in md:
         if i not in mdchars:
-            raise ValueError
-    for i in range(len(current)-1, -1, -1):
-        current[i]=mdchars[mdchars.find(current[i])+1]
-        if current[i]!=mdchars[0]:
-            return 'md'+''.join(current)
-    return 'md'+mdchars[0]+''.join(current)
+            raise ValueError("invalid id: %s" % repr(md))
+        res*=len(mdchars)
+        res+=mdchars.find(i)+1
+    return res
+
+def int2md(no):
+    if no<=0:
+        raise ValueError("invalid id: %s" % repr(no))
+    res=''
+    while no>0:
+        no, reminder=divmod(no-1, len(mdchars))
+        res=mdchars[reminder]+res
+    return "md"+res
 
 def getmusicdata(db, musicid):
     dbc=db.cursor()
-    dbc.execute('SELECT id, title, desc, filename, time, uploader FROM music WHERE id=?;', (musicid,))
+    dbc.execute('SELECT title, desc, filename, time, uploader FROM music WHERE id=?;', (musicid,))
     musicdata=dbc.fetchone()
     if musicdata:
-        return dict(zip(('id', 'title', 'desc', 'filename', 'time', 'uploader'), musicdata))
+        return dict(zip(('title', 'desc', 'filename', 'time', 'uploader'), musicdata))
     else:
         return None
 
 def addmusic(db, title, desc, filename, uploader):
-    db.create_function('next_music', 1, nextmusic)
     dbc=db.cursor()
-    dbc.execute('SELECT count(*) FROM music;')
-    music_count=dbc.fetchone()[0]
-    args=(title, desc, filename, time.time(), uploader)
-    if music_count>0:
-        dbc.execute('INSERT INTO music (id, title, desc, filename, time, uploader) VALUES (next_music((SELECT id FROM music WHERE no=(SELECT max(no) FROM music))), ?, ?, ?, ?, ?);', args)
-    else:
-        dbc.execute("INSERT INTO music (id, title, desc, filename, time, uploader) VALUES ('md2', ?, ?, ?, ?, ?);", args)
+    dbc.execute("INSERT INTO music (title, desc, filename, time, uploader) VALUES (?, ?, ?, ?, ?);", (title, desc, filename, time.time(), uploader))
     db.commit()
     dbc.execute('SELECT last_insert_rowid();')
-    lastid=dbc.fetchone()[0]
-    dbc.execute('SELECT id FROM music WHERE no=?', (lastid,))
     return dbc.fetchone()[0]
 

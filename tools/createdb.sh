@@ -17,8 +17,7 @@ CREATE TABLE users (
 );
 INSERT INTO users (no, id, nick) VALUES (0, 'root', 'root');
 CREATE TABLE music (
-    no       INTEGER PRIMARY KEY,
-    id       TEXT UNIQUE,
+    id       INTEGER PRIMARY KEY,
     title    TEXT,
     desc     TEXT,
     filename TEXT,

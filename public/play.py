@@ -14,7 +14,10 @@ def main():
     req=cgi.FieldStorage()
     if 'id' in req:
         db=sqlite3.connect(datafile('midymidy.db'))
-        musicdata=music.getmusicdata(db, req['id'].value)
+        try:
+            musicdata=music.getmusicdata(db, music.md2int(req['id'].value))
+        except ValueError:
+            musicdata=None
         if not musicdata:
             prbin('Status: 404 Not Found\r\n\r\n')
             exit()
