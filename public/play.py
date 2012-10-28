@@ -11,6 +11,9 @@ from misc import *
 import music
 
 def main():
+    if detect_ie():
+        exit()
+
     req=cgi.FieldStorage()
     if 'id' in req:
         db=sqlite3.connect(datafile('midymidy.db'))

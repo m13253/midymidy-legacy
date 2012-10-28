@@ -12,6 +12,9 @@ from misc import *
 import music
 
 def main():
+    if detect_ie():
+        exit()
+
     req=cgi.FieldStorage()
     if 'upload_file' in req:
         return process_upload(req)

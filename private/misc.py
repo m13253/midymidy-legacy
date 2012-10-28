@@ -3,6 +3,7 @@
 import cgi
 import json
 import os
+import re
 import sys
 import traceback
 
@@ -71,4 +72,11 @@ def error_page(status, msg):
         prfile(privfile('banner.html'))
         prbin('''<h2>%s</h2>''' % msg)
         prfile(privfile('htmlfoot.html'))
+
+def detect_ie():
+    if 'HTTP_USER_AGENT' in os.environ and re.search('M?SI?E', os.environ['HTTP_USER_AGENT']):
+        prbin('Status: 302 Found\r\nLocation: noie.html\r\n\r\n')
+        return True
+    else:
+        return False
 
