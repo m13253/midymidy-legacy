@@ -2,6 +2,14 @@
 
 for i in "$@"
 do
-  [ -z "$i" ] || (timidity --output-stereo -OwS -Aa -a -C0 --reverb=G -o "$(basename "$i" .mid).wav" "$i" && ffmpeg -y -i "$(basename "$i" .mid).wav" -acodec vorbis -aq 2 -strict -2 "$(basename "$i" .mid).ogg" && rm "$(basename "$i" .mid).wav")
+    if [ "$i" ]
+    then
+        BASENAME="$(basename "$i" .mid)"
+        timidity --output-stereo -OwS -Aa -a -C0 --reverb=G -o "$BASENAME.wav" "$i" && \
+        sox -S --norm=-1 "$BASENAME.wav" "$BASENAME-gain.wav" && \
+        mv "$BASENAME-gain.wav" "$BASENAME.wav" && \
+        ffmpeg -y -i "$BASENAME.wav" -acodec vorbis -aq 2 -strict -2 "$BASENAME.ogg" && \
+        rm "$BASENAME.wav"
+    fi
 done
 
