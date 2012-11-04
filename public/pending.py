@@ -40,7 +40,7 @@ def main():
     for midifile in dirlisting:
         if midifile.endswith('.mid'):
             midifile=midifile[:-4]
-            dbc.execute('SELECT id, title, time FROM music WHERE filename=?;', (midifile,))
+            dbc.execute('SELECT id, title, mtime FROM music WHERE filename=?;', (midifile,))
             musicinfo=dbc.fetchone()
             if not musicinfo:
                 continue

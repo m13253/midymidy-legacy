@@ -26,16 +26,17 @@ def int2md(no):
 
 def getmusicdata(db, musicid):
     dbc=db.cursor()
-    dbc.execute('SELECT title, desc, filename, time, uploader FROM music WHERE id=?;', (musicid,))
+    dbc.execute('SELECT title, desc, filename, ctime, mtime, uploader FROM music WHERE id=?;', (musicid,))
     musicdata=dbc.fetchone()
     if musicdata:
-        return dict(zip(('title', 'desc', 'filename', 'time', 'uploader'), musicdata))
+        return dict(zip(('title', 'desc', 'filename', 'ctime', 'mtime', 'uploader'), musicdata))
     else:
         return None
 
 def addmusic(db, title, desc, filename, uploader):
     dbc=db.cursor()
-    dbc.execute("INSERT INTO music (title, desc, filename, time, uploader) VALUES (?, ?, ?, ?, ?);", (title, desc, filename, time.time(), uploader))
+    current_time=time.time()
+    dbc.execute("INSERT INTO music (title, desc, filename, ctime, mtime, uploader) VALUES (?, ?, ?, ?, ?, ?);", (title, desc, filename, current_time, current_time, uploader))
     db.commit()
     dbc.execute('SELECT last_insert_rowid();')
     return dbc.fetchone()[0]
