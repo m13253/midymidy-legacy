@@ -8,15 +8,15 @@ html, body {
 }
 
 *[lang=zh-cn], *[lang=zh-sg], *[lang=zh] {
-    font-family: "Lucinda Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, "Heiti SC", STHeiti, "Hiragino Sans GB", "Hiragino Sans GB W3", "Hiragino Sans GB W6", "Droid Sans Fallback", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Light", "WenQuanYi Zen Hei", "Microsoft Yahei", SimHei, sans-serif, "AR PL New Sung", "AR PL UMing CN", SimSun, "WenQuanYi Bitmap Song";
+    font-family: "Lucida Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, "Heiti SC", STHeiti, "Hiragino Sans GB", "Hiragino Sans GB W3", "Hiragino Sans GB W6", "Droid Sans Fallback", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Light", "WenQuanYi Zen Hei", XHei, "Microsoft Yahei", SimHei, sans-serif, "AR PL New Sung", "AR PL UMing CN", SimSun, "WenQuanYi Bitmap Song";
 }
 
 *[lang=zh-tw], *[lang=zh-hk] {
-    font-family: "Lucinda Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, "Heiti TC", STHeiti, "Droid Sans Fallback", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Light", "WenQuanYi Zen Hei", "Microsoft JhengHei", sans-serif, "AR PL UMing CN", MingLiu, "WenQuanYi Bitmap Song";
+    font-family: "Lucida Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, "Heiti TC", STHeiti, "Droid Sans Fallback", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Light", "WenQuanYi Zen Hei", XHei, "Microsoft JhengHei", sans-serif, "AR PL UMing CN", MingLiu, "WenQuanYi Bitmap Song";
 }
 
 *[lang=en], *[lang=en-us] {
-    font-family: "Lucinda Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, sans-serif;
+    font-family: "Lucida Grande", Cantarell, Ubuntu, Calibri, "Droid Sans", "DejaVu Sans", "Liberation Sans", FreeSans, Helvetica, Arial, sans-serif;
 }
 
 h1 {
