@@ -21,7 +21,7 @@ def getmusicdata(musicid, columns):
     dbc=db.cursor()
     dbc.execute(sqlconv.col2select(columns, 'music', 'WHERE id=?'), (mdid.md2int(musicid),))
     musicdata=dbc.fetchone()
-    if musicdata:
+    if musicdata!=None:
         return sqlconv.res2dict(columns, musicdata)
     else:
         return None
@@ -31,7 +31,7 @@ def getmusicdatabyfn(filename, columns):
     dbc=db.cursor()
     dbc.execute(sqlconv.col2select(columns, 'music', 'WHERE filename=?'), (mdid.md2int(filename),))
     musicdata=dbc.fetchone()
-    if musicdata:
+    if musicdata!=None:
         return sqlconv.res2dict(columns, musicdata)
     else:
         return None
@@ -42,7 +42,7 @@ def getmusiclist(columns, conditions, condargs=()):
     dbc.execute(sqlconv.col2select(columns, 'music', conditions), condargs)
     while True:
         musicdata=dbc.fetchone()
-        if musicdata:
+        if musicdata!=None:
             yield sqlconv.res2dict(columns, musicdata)
         else:
             break
