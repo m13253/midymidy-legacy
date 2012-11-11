@@ -9,7 +9,7 @@ import uuid
 
 import config
 from misc import *
-import music
+import dbman
 
 def main():
     if detect_ie():
@@ -77,7 +77,7 @@ def process_upload(req):
         desc=''
 
     db=sqlite3.connect(datafile('midymidy.db'))
-    music.addmusic(db, title, desc, filename, 0)
+    dbman.addmusic(title, desc, filename, 0)
     prbin('Status: 302 Found\r\nLocation: pending.py\r\n\r\n')
 
 if __name__=='__main__':

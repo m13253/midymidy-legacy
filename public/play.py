@@ -8,7 +8,7 @@ import time
 
 import config
 from misc import *
-import music
+import dbman
 
 def main():
     if detect_ie():
@@ -16,9 +16,8 @@ def main():
 
     req=cgi.FieldStorage()
     if 'id' in req:
-        db=sqlite3.connect(datafile('midymidy.db'))
         try:
-            musicdata=music.getmusicdata(db, music.md2int(req['id'].value))
+            musicdata=dbman.getmusicdata(req['id'].value, ('title', 'desc', 'ctime', 'uploader', 'filename'))
         except ValueError:
             musicdata=None
         if not musicdata:

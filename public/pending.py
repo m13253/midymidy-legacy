@@ -9,14 +9,15 @@ import uuid
 
 import config
 from misc import *
-import music
+import dbman
+import mdid
 
 def main():
     if detect_ie():
         exit()
 
     req=cgi.FieldStorage()
-    db=sqlite3.connect(datafile('midymidy.db'))
+    db=sqlite3.connect(datafile('music.db'))
     dbc=db.cursor()
 
     prbin('Status: 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n');
@@ -44,7 +45,7 @@ def main():
             musicinfo=dbc.fetchone()
             if not musicinfo:
                 continue
-            prbin('<tr><td>%s</td><td>%s</td><td>%s</td><td>' % (escape_for_html(music.int2md(musicinfo[0])), escape_for_html(musicinfo[1]), escape_for_html(time.strftime("%c", time.localtime(musicinfo[2])))))
+            prbin('<tr><td>%s</td><td>%s</td><td>%s</td><td>' % (escape_for_html(mdid.int2md(musicinfo[0])), escape_for_html(musicinfo[1]), escape_for_html(time.strftime("%c", time.localtime(musicinfo[2])))))
             if midifile+'.ogg' in dirlisting:
                 prbin('正在转码</td></tr>\n')
             elif midifile+'.wav' in dirlisting:

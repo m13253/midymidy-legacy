@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH="$PATH:$PWD"
+export PATH="$PATH:$PWD/functions"
 cd ../public/midi/pending
 while true
 do
