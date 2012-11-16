@@ -87,6 +87,14 @@ CREATE TABLE score (
 COMMIT;
 EOM
 
+    functions/newdb.sh ../data/invite.db <<EOM
+BEGIN TRANSACTION;
+CREATE TABLE invite (
+    code          TEXT PRIMARY KEY,
+    avail         BOOL
+);
+EOM
+
     chmod 777 ../data ../public/midi/pending
     rm -f -v ../public/midi/*.mid ../public/midi/*.ogg ../public/midi/pending/*.mid ../public/midi/pending/*.wav ../public/midi/pending/*.ogg
 fi
