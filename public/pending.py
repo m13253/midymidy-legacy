@@ -3,9 +3,7 @@
 import cgi
 import os
 import sqlite3
-import json
 import time
-import uuid
 
 import config
 from misc import *

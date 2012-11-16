@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import cgi
-import os
 import sqlite3
-import json
 import time
 
 import config
