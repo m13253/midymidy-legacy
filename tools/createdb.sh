@@ -20,8 +20,10 @@ CREATE TABLE users (
     avail         BOOL,
     nick          TEXT,
     bio           TEXT,
-    token         BLOB,
-    last_seen     REAL,
+    token         TEXT,
+    ctime         REAL,
+    atime         REAL,
+    ban_until     REAL,
     sex           INTEGER,
     birth         REAL
 );
@@ -47,7 +49,9 @@ CREATE TABLE music (
     only_reg      BOOL,
     only_premium  BOOL,
     only_ssl      BOOL,
-    accept_region TEXT
+    only_ipv6     BOOL,
+    accept_region TEXT,
+    sha512        BLOB
 );
 COMMIT;
 EOM
