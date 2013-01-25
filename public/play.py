@@ -67,7 +67,7 @@ audio.addEventListener("canplay", function() {
 }, true);
 audio.addEventListener("timeupdate", function() {
     if(score)
-        score.scrollTo(0, audio.currentTime);
+        score.scrollTo(0, audio.currentTime*32);
 }, true);
 audio.load();
 </script>
